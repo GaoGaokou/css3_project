@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+        list-style: none;
+    }
+    .wrapper{
+        width:800px;
+        border:1px solid #000;
+        margin:100px auto;
+        
+
+    }
+    ul{
+    width:100%;
+    /* 子元素居中显示并且根据浏览器缩小来换行 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+        
+    }
+    li{
+        width:200px;
+        height:200px;
+        margin:10px;
+        display: inline-block;
+        perspective: 300px;
+        /* 父节点设置景深  才能看到子元素的立体效果 */
+    }
+    .wrapper .picBox{
+        width:100%;
+        height:100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transform-origin: 50% 50% -100px;
+        /* overflow: hidden; */
+        /* 让子元素呈现3D立体效果 */
+        /* transform-origin: 50% 50%; */
+
+    }
+    .wrapper .picBox .show,
+    .wrapper .picBox .hide
+    {
+        width:100%;
+        height:100%;
+        
+
+    }
+    .wrapper .picBox .show img{
+        width:100%;
+        height:100%;
+        opacity: 0.5;
+        /* 添加透明度方便看到后面的标题 */
+    }
+    .wrapper .picBox .hide
+    { 
+        position:absolute;
+        top:0;
+        left:0;
+        background: #000;
+        color:#fff;
+        font-size: 20px;
+        opacity: 0.3;
+        text-align: center;
+        line-height: 200px;
+        transform: translate3d(0,0,-1px);
+        /* 让标题显示在照片后面 */
+        
+    }
+    /* 先平移标题图片根据不同的方向
+    改变标题图片的旋转轴中心 当鼠标移入之前和移出之后 让标题分别位于上下左右位置 */
+    .wrapper .in-top .picBox .hide,
+    .wrapper .out-top .picBox .hide
+    {
+        /* 将标题旋转到顶部*/
+        transform-origin: bottom;
+        transform: translate3d(0,-100%,0) rotate3d(1,0,0,90deg);
+    }
+    .wrapper .in-bottom .picBox .hide,
+    .wrapper .out-bottom .picBox .hide
+    {
+        transform-origin: top;
+        transform: translate3d(0,100%,0) rotate3d(1,0,0,-90deg);
+    }
+    .wrapper .in-left .picBox .hide, 
+    .wrapper .out-left .picBox .hide
+{
+        transform-origin: right;
+        transform: translate3d(-100%,0,0) rotate3d(0,1,0,-90deg);
+    }
+    .wrapper .in-right .picBox .hide,
+    .wrapper .out-right .picBox .hide
+{
+        transform-origin:left ;
+        transform: translate3d(100%,0,0) rotate3d(0,1,0,90deg);
+    }
+ /* 给上下左右的标题定义动画 
+    鼠标移入时候  即就是让盒子从0状态旋转90度 让标题旋转到盒子picBox的正面
+ */
+    @keyframes in-top{
+        0%{transform:rotate3d(0,0,0,0);}
+        100%{
+            transform:rotate3d(1,0,0,-90deg);
+            /* translate3d(0,100px,100px) ;  */
+        }
+    }
+    /*  鼠标移入时候  即盒子从90度旋转到初始状态度0度 让标题旋转到盒子picBox的顶部*/
+    @keyframes out-top{
+        0%{
+            transform:rotate3d(1,0,0,-90deg);}
+        100%{
+            transform:rotate3d(0,0,0,0);
+        }
+    }
+    .wrapper .in-top .picBox{
+        animation: in-top 3s linear forwards;
+    }
+    .wrapper .out-top .picBox {
+        animation: out-top 3s linear forwards;
+    }
+    @keyframes in-bottom{
+        0%{transform:rotate3d(0,0,0,0);}
+        100%{
+            transform:rotate3d(1,0,0,90deg) ;
+            /* translate3d(0,-100px,100px);  */
+        }
+    }
+    @keyframes out-bottom{
+        100%{transform:rotate3d(0,0,0,0);}
+        0%{
+            transform:rotate3d(1,0,0,90deg) ;
+            /* translate3d(0,-100px,100px);  */
+        }
+    }
+    .wrapper .in-bottom .picBox{
+        animation: in-bottom 3s linear forwards;
+    }
+    .wrapper .out-bottom .picBox{
+        animation: out-bottom 3s linear forwards;
+    }
+    @keyframes in-left{
+        0%{transform:rotate3d(0,0,0,0);}
+        100%{
+            transform:rotate3d(0,1,0,90deg) ;
+            /* translate3d(100px,0,100px);  */
+        }
+    }
+    @keyframes out-left{
+        100%{transform:rotate3d(0,0,0,0);}
+        0%{
+            transform:rotate3d(0,1,0,90deg) ;
+            /* translate3d(100px,0,100px);  */
+        }
+    }
+    .wrapper .in-left .picBox{
+        animation: in-left 3s linear forwards;
+    }
+    .wrapper .out-left .picBox{
+        animation: out-left 3s linear forwards;
+    }
+    @keyframes in-right{
+        0%{transform:rotate3d(0,0,0,0);}
+        100%{
+            transform:rotate3d(0,1,0,-90deg) ;
+            /* translate3d(-100px,0,100px);  */
+        }
+    } 
+    @keyframes out-right{
+    100%{transform:rotate3d(0,0,0,0);}
+        0%{
+            transform:rotate3d(0,1,0,-90deg) ;
+            /* translate3d(-100px,0,100px);  */
+        }
+    }
+    .wrapper .in-right .picBox{
+        animation: in-right 3s linear forwards;
+    }
+    .wrapper .out-right .picBox{
+        animation: out-right 3s linear forwards;
+    }
+    
+    
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <ul>
+            <li class="out-right">
+                <div class="picBox">
+                    <div class="show"><img src="../images/1.jpg" alt=""></div>
+                    <div class="hide">
+                        <h3>标题</h3>
+                    </div>
+                </div>
+            </li>
+            <li class="in-bottom">
+                <div class="picBox">
+                    <div class="show"><img src="../images/2.jpg" alt=""></div>
+                    <div class="hide">
+                        <h3>标题</h3>
+                    </div>
+                </div>
+            </li>
+            <li class="in-left">
+                <div class="picBox">
+                    <div class="show"><img src="../images/3.jpg" alt=""></div>
+                    <div class="hide">
+                        <h3>标题</h3>
+                    </div>
+                </div>
+            </li>
+            <li class="in-right">
+                <div class="picBox">
+                    <div class="show"><img src="../images/4.jpg" alt=""></div>
+                    <div class="hide">
+                        <h3>标题</h3>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="picBox">
+                    <div class="show"><img src="../images/5.jpg" alt=""></div>
+                    <div class="hide">
+                        <h3>标题</h3>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="picBox">
+                    <div class="show"><img src="../images/6.jpg" alt=""></div>
+                    <div class="hide">
+                        <h3>标题</h3>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

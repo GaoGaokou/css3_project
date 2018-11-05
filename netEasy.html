@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       .wrapper{
+           position: absolute;
+           top:50%;
+           left:50%;
+           transform:translate(-50%,-50%);
+       }
+       .table{
+           width:100px;
+           height:100px;
+           border-radius: 50%;
+           border:50px solid #000;
+           background: url("../images/1.jpeg");
+           background-size: cover;
+           animation: move 5s linear infinite paused;
+       }
+       @keyframes move{
+           0%{
+               transform:rotateZ(0deg);
+           }
+           100%{
+               transform:rotateZ(360deg);
+           }
+       }
+       .pin{
+           position:absolute;
+           top:-50px;
+           left:180px;
+           height:100px;
+           width:10px;
+           border-bottom-right-radius: 100%;
+           border-bottom-left-radius: 100%;
+           /* 细针效果 */
+           transform-origin: top;
+           /* 绕某个位置变换 */
+           transform:rotateZ(-30deg);
+           background-color: #ccc;
+           transition:all 2s linear;
+           /* 过渡动画 */
+       }
+       .play{
+           font-size: 30px;
+           width:140px;
+           height:40px;
+           position:absolute;
+           bottom:150px;
+           left:40%;
+       }
+       .active{
+        transform:rotateZ(30deg);
+       }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="table"></div>
+        <div class="pin"></div>
+    </div>
+    <button class="play">播放</button>
+    <script>
+        var flag=true;
+        var pin=document.getElementsByClassName('pin')[0];
+        var table=document.getElementsByClassName('table')[0];
+
+        var btn=document.getElementsByClassName('play')[0];
+        console.log(pin);
+       btn.onclick=function(){
+           if(flag){
+               flag=false;
+               pin.className='pin active';
+               table.style.animationPlayState='running';
+           }else{
+            flag=true;
+               pin.className='pin';
+               table.style.animationPlayState='paused';
+           }
+       }
+    </script>
+</body>
+</html>
